@@ -49,8 +49,6 @@ with open("README.md", "r") as readme:
 SETUP_METADATA = {
     "name": "sourmash",
     "description": "tools for comparing DNA sequences with MinHash sketches",
-    "long_description": LONG_DESCRIPTION,
-    "long_description_content_type": "text/markdown",
     "url": "https://github.com/dib-lab/sourmash",
     "author": "C. Titus Brown",
     "author_email": "titus@idyll.org",
