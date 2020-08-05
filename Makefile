@@ -19,7 +19,7 @@ dist: FORCE
 	$(PYTHON) setup.py sdist
 
 test:
-	tox -e py37
+	tox -e py38
 	cargo test
 
 doc: .PHONY
