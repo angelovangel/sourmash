@@ -1,0 +1,42 @@
+let
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+  nixpkgs = import <nixpkgs> { overlays = [ moz_overlay ]; };
+  ruststable = (nixpkgs.latest.rustChannels.stable.rust);
+
+  mach-nix = import (
+    builtins.fetchGit {
+      url = "https://github.com/DavHau/mach-nix/";
+      ref = "2.0.0";
+    }
+  );
+
+  customPython = mach-nix.mkPython {
+    python = nixpkgs.python38;
+    requirements = ''
+       screed>=0.9
+       cffi>=1.14.0
+       numpy
+       matplotlib
+       scipy
+       deprecation>=2.0.6
+       cachetools >=4,<5
+       setuptools>=38.6.0
+       milksnake
+       setuptools_scm>=3.2.0
+       setuptools_scm_git_archive
+       pytest
+       hypothesis
+    '';
+  };
+
+in
+  with nixpkgs;
+
+  nixpkgs.mkShell {
+    buildInputs = [
+      customPython
+      git
+      stdenv
+      ruststable
+   ];
+}
