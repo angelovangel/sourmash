@@ -316,13 +316,13 @@ impl Nodegraph {
             .bs
             .iter()
             .zip(&other.bs)
-            .map(|(bs, bs_other)| bs.intersection(bs_other).count())
+            .map(|(bs, bs_other)| bs.intersection_count(bs_other))
             .sum();
         let size: usize = self
             .bs
             .iter()
             .zip(&other.bs)
-            .map(|(bs, bs_other)| bs.union(bs_other).count())
+            .map(|(bs, bs_other)| bs.union_count(bs_other))
             .sum();
         result as f64 / size as f64
     }
@@ -332,7 +332,7 @@ impl Nodegraph {
             .bs
             .iter()
             .zip(&other.bs)
-            .map(|(bs, bs_other)| bs.intersection(bs_other).count())
+            .map(|(bs, bs_other)| bs.intersection_count(bs_other))
             .sum();
         let size: usize = self.bs.iter().map(|bs| bs.len()).sum();
         result as f64 / size as f64
