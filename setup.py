@@ -29,4 +29,5 @@ def build_native(spec):
 
 setup(
   milksnake_tasks=[build_native],
+  package_dir={"": "src"},
 )
