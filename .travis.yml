@@ -30,13 +30,10 @@ jobs:
       stage: test
       python: 3.7.9
     - <<: *test
-      python: 3.8
-      env:
-        - PYTHONDEVMODE=1
-    - <<: *test
       os: osx
       osx_image: xcode10.1
       language: generic
+      before_script: python3 -m pip install tox-travis
       env:
         - TOXENV=py37
     - <<: *test
@@ -100,6 +97,14 @@ jobs:
       services:
         - redis
         - docker
+    - <<: *test
+      python: 3.9
+      env:
+        - PYTHONDEVMODE=1
+    - <<: *test
+      python: 3.8
+      env:
+        - PYTHONDEVMODE=1
     - <<: *test
       python: 3.7.9
       env:
