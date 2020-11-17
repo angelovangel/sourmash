@@ -7,6 +7,9 @@ pub mod bigsi;
 pub mod linear;
 pub mod sbt;
 
+#[cfg(feature = "experimental")]
+pub mod greyhound;
+
 pub mod storage;
 
 pub mod search;
