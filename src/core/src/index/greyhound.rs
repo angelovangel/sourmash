@@ -5,8 +5,10 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use getset::{CopyGetters, Getters, Setters};
 use log::info;
 use nohash_hasher::BuildNoHashHasher;
-use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
+
+#[cfg(feature = "parallel")]
+use rayon::prelude::*;
 
 use crate::signature::{Signature, SigsTrait};
 use crate::sketch::minhash::KmerMinHash;
@@ -23,6 +25,7 @@ pub struct RevIndex {
     template: Sketch,
 }
 
+#[cfg(feature = "parallel")]
 impl RevIndex {
     pub fn load<P: AsRef<Path>>(
         index_path: P,
@@ -296,18 +299,29 @@ impl RevIndex {
     }
 }
 
-#[derive(CopyGetters, Getters, Setters, Serialize, Deserialize)]
+#[derive(CopyGetters, Getters, Setters, Serialize, Deserialize, Debug)]
 pub struct GatherResult {
+    #[getset(get_copy = "pub")]
     intersect_bp: usize,
+
+    #[getset(get_copy = "pub")]
     f_orig_query: f64,
+
+    #[getset(get_copy = "pub")]
     f_match: f64,
+
     f_unique_to_query: f64,
     f_unique_weighted: f64,
     average_abund: usize,
     median_abund: usize,
     std_abund: usize,
+
+    #[getset(get = "pub")]
     filename: String,
+
+    #[getset(get = "pub")]
     name: String,
+
     md5: String,
     match_: String,
     f_match_orig: f64,
